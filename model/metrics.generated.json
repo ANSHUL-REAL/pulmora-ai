@@ -1,0 +1,42 @@
+{
+  "accuracy": 0.9375,
+  "precision": 0.8889,
+  "recall": 1.0,
+  "confusion_matrix": [
+    [
+      7,
+      1
+    ],
+    [
+      0,
+      8
+    ]
+  ],
+  "training_curves": {
+    "epochs": [
+      1,
+      2,
+      3
+    ],
+    "train_loss": [
+      0.1692,
+      0.0855,
+      0.0595
+    ],
+    "val_loss": [
+      0.4761,
+      0.1815,
+      0.4438
+    ],
+    "train_accuracy": [
+      0.9321,
+      0.9689,
+      0.9776
+    ],
+    "val_accuracy": [
+      0.875,
+      0.9375,
+      0.8125
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/next-*.log
+backend/.venv
+backend/__pycache__
+backend/app/__pycache__
+**/__pycache__/
+*.pyc
+.env
+.DS_Store
+Thumbs.db
+dataset/
+model/checkpoints
+model/outputs
+.chrome-profile/
+*.log
