@@ -1,6 +1,27 @@
 # Pulmora AI
 
-Pulmora AI is a split-stack educational web app for chest X-ray analysis with explainable AI visuals.
+Pulmora AI is an educational chest X-ray analysis platform that combines a Next.js frontend, a FastAPI inference API, and a trained PyTorch model to deliver real image classification with Grad-CAM explainability.
+
+It is designed as a portfolio-ready AI product demo: users can upload a chest X-ray, run model inference, review prediction confidence, and inspect a heatmap that highlights the regions influencing the model's output.
+
+## Live links
+
+- Live demo: [https://pulmora-ai.vercel.app/](https://pulmora-ai.vercel.app/)
+- Backend API: [https://pulmora-ai-1.onrender.com/](https://pulmora-ai-1.onrender.com/)
+- Health check: [https://pulmora-ai-1.onrender.com/health](https://pulmora-ai-1.onrender.com/health)
+- GitHub repository: [https://github.com/ANSHUL-REAL/pulmora-ai](https://github.com/ANSHUL-REAL/pulmora-ai)
+
+## Highlights
+
+- Real trained PyTorch model for `Normal` vs `Pneumonia` chest X-ray classification
+- Grad-CAM heatmap generation for visual explainability
+- Interactive frontend built with Next.js
+- FastAPI backend with live inference and metrics endpoints
+- Deployed full-stack demo using Vercel and Render
+
+## Disclaimer
+
+Pulmora AI is intended for educational and portfolio use only. It is not a medical device and must not be used for clinical diagnosis or treatment decisions.
 
 ## Structure
 
