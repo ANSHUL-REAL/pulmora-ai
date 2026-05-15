@@ -15,3 +15,7 @@ model/checkpoints
 model/outputs
 .chrome-profile/
 *.log
+*.err
+temp-gitlyze/
+temp-orbitx/
+resume-roaster/

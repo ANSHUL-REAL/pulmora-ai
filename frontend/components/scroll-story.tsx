@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  MotionValue,
+  useScroll,
+  useSpring,
+  useTransform
+} from "framer-motion";
 import {
   Activity,
   Brain,
@@ -105,14 +111,46 @@ export default function ScrollStory() {
     offset: ["start 78%", "end 38%"]
   });
 
+  const smoothTextProgress = useSpring(textProgress, {
+    stiffness: 88,
+    damping: 24,
+    mass: 0.35
+  });
+  const smoothTokenProgress = useSpring(tokenProgress, {
+    stiffness: 88,
+    damping: 24,
+    mass: 0.35
+  });
+  const smoothSummaryProgress = useSpring(summaryProgress, {
+    stiffness: 88,
+    damping: 24,
+    mass: 0.38
+  });
+
   const centerIndex = Math.floor(headlineWords.length / 2);
   const tokenCenterIndex = Math.floor(featureTokens.length / 2);
-  const panelY = useTransform(summaryProgress, [0, 0.55], [80, 0]);
+  const panelY = useTransform(smoothSummaryProgress, [0, 0.55], [80, 0]);
   const panelOpacity = useTransform(
-    summaryProgress,
+    smoothSummaryProgress,
     [0, 0.25, 0.55],
     [0.15, 0.55, 1]
   );
+  const panelShadow = useTransform(
+    smoothSummaryProgress,
+    [0, 0.55],
+    [
+      "0 20px 40px rgba(0, 0, 0, 0.12)",
+      "0 34px 88px rgba(0, 0, 0, 0.34)"
+    ]
+  );
+  const textGlowOpacity = useTransform(smoothTextProgress, [0, 0.22, 0.58], [0.16, 0.34, 0.78]);
+  const textGlowScale = useTransform(smoothTextProgress, [0, 0.58], [0.84, 1.08]);
+  const textGlowY = useTransform(smoothTextProgress, [0, 0.58], [38, 0]);
+  const tokenGlowOpacity = useTransform(smoothTokenProgress, [0, 0.24, 0.58], [0.12, 0.3, 0.6]);
+  const tokenGlowScale = useTransform(smoothTokenProgress, [0, 0.58], [0.88, 1.04]);
+  const tokenGlowY = useTransform(smoothTokenProgress, [0, 0.58], [26, 0]);
+  const summaryGlowOpacity = useTransform(smoothSummaryProgress, [0, 0.24, 0.58], [0.1, 0.24, 0.5]);
+  const summaryGlowScale = useTransform(smoothSummaryProgress, [0, 0.58], [0.92, 1.04]);
 
   let wordIndex = 0;
 
@@ -123,6 +161,15 @@ export default function ScrollStory() {
       </div>
 
       <div ref={textRef} className="story-panel story-panel-text">
+        <motion.div
+          aria-hidden="true"
+          className="story-back-glow story-back-glow-text"
+          style={{
+            opacity: textGlowOpacity,
+            scale: textGlowScale,
+            y: textGlowY
+          }}
+        />
         <div className="story-stage" style={{ perspective: "560px" }}>
           {headlineLines.map((line, lineIndex) => (
             <div key={`line-${lineIndex}`} className="story-line">
@@ -134,7 +181,7 @@ export default function ScrollStory() {
                     word={word}
                     index={currentIndex}
                     centerIndex={centerIndex}
-                    scrollYProgress={textProgress}
+                    scrollYProgress={smoothTextProgress}
                   />
                 );
               })}
@@ -144,6 +191,15 @@ export default function ScrollStory() {
       </div>
 
       <div ref={tokensRef} className="story-panel story-panel-tokens">
+        <motion.div
+          aria-hidden="true"
+          className="story-back-glow story-back-glow-token"
+          style={{
+            opacity: tokenGlowOpacity,
+            scale: tokenGlowScale,
+            y: tokenGlowY
+          }}
+        />
         <div className="story-subhead">
           <span className="story-bracket">[</span>
           <p>Process Overview</p>
@@ -156,16 +212,24 @@ export default function ScrollStory() {
               label={token.label}
               index={index}
               centerIndex={tokenCenterIndex}
-              scrollYProgress={tokenProgress}
+              scrollYProgress={smoothTokenProgress}
             />
           ))}
         </div>
       </div>
 
       <div ref={summaryRef} className="story-panel story-panel-summary">
+        <motion.div
+          aria-hidden="true"
+          className="story-back-glow story-back-glow-summary"
+          style={{
+            opacity: summaryGlowOpacity,
+            scale: summaryGlowScale
+          }}
+        />
         <motion.article
           className="story-summary-card"
-          style={{ y: panelY, opacity: panelOpacity }}
+          style={{ y: panelY, opacity: panelOpacity, boxShadow: panelShadow }}
         >
           <span className="eyebrow">Interpretability Flow</span>
           <h2>

@@ -1,5 +1,6 @@
 import AnimatedHero from "@/components/animated-hero";
 import MetricsPanel from "@/components/metrics-panel";
+import MouseSparkles from "@/components/mouse-sparkles";
 import OrbitalNavigation from "@/components/orbital-navigation";
 import ShaderBackground from "@/components/shader-background";
 import ScrollStory from "@/components/scroll-story";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <main className="page-shell">
       <ShaderBackground />
+      <MouseSparkles />
 
       <header className="topbar">
         <div>

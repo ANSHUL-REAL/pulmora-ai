@@ -80,26 +80,35 @@ export default function ShaderBackground() {
           float curtain = smoothstep(0.18, 0.74, veil + detail * 0.25);
           curtain *= smoothstep(1.2, -0.2, uv.y);
 
-          vec2 rightFlow = vec2((uv.x - 0.28) * 2.4, uv.y * 1.1 + time * 0.55);
+          vec2 rightFlow = vec2((uv.x - 0.28) * 2.0, uv.y * 1.3 + time * 0.55);
           float rightSmoke = fbm(rightFlow + vec2(0.0, time * 0.35));
-          float rightColumn = smoothstep(0.02, 0.68, rightSmoke);
-          rightColumn *= smoothstep(-0.12, 0.82, uv.x);
+          float rightColumn = smoothstep(0.08, 0.55, rightSmoke);
+          rightColumn *= smoothstep(-0.25, 0.65, uv.x);
           rightColumn *= smoothstep(1.3, -0.6, uv.y);
 
-          float distanceToMouse = length(uv - mouse);
-          float flare = smoothstep(0.36, 0.0, distanceToMouse);
+          float distToMouse = length(uv - mouse);
+          float mouseGlow = smoothstep(0.7, 0.0, distToMouse);
+          float mouseGlowSoft = smoothstep(1.5, 0.0, distToMouse);
+
+          float rightGreenGrad = smoothstep(0.3, 1.0, uv.x) * 0.45;
+          float rightBrightBand = smoothstep(0.5, 0.95, uv.x) * smoothstep(0.9, 0.3, abs(uv.y * 0.8)) * 0.35;
 
           vec3 deep = vec3(0.03, 0.06, 0.07);
           vec3 oxygen = vec3(0.12, 0.68, 0.60);
           vec3 moss = vec3(0.27, 0.45, 0.28);
-          vec3 bone = vec3(0.91, 0.92, 0.82);
 
           float gradient = clamp(uv.y + 0.55, 0.0, 1.0);
           vec3 color = mix(deep, oxygen, curtain * 0.75);
           color = mix(color, moss, gradient * curtain * 0.45);
-          color += vec3(0.06, 0.26, 0.23) * rightColumn * 0.88;
-          color += vec3(0.02, 0.09, 0.1) * smoothstep(0.1, 0.9, uv.x) * rightColumn;
-          color += bone * flare * curtain * 0.45;
+
+          color += vec3(0.12, 0.68, 0.55) * rightColumn * 1.1;
+          color += vec3(0.06, 0.45, 0.36) * smoothstep(0.1, 0.9, uv.x) * rightColumn * 1.0;
+          color += vec3(0.08, 0.55, 0.42) * rightGreenGrad;
+          color += vec3(0.10, 0.72, 0.58) * rightBrightBand;
+
+          color += vec3(0.18, 0.82, 0.68) * mouseGlow * 0.65;
+          color += vec3(0.06, 0.40, 0.32) * mouseGlowSoft * 0.35;
+
           color += vec3(0.02, 0.08, 0.07) * smoothstep(-0.5, 0.4, uv.x + uv.y);
 
           float vignette = smoothstep(1.65, 0.25, length(uv * vec2(0.9, 1.15)));
